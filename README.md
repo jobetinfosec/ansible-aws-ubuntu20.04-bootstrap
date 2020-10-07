@@ -78,7 +78,7 @@ h) Replace <TEMPORARY_ITEMS> with your own data:
 
 | Item | Instructions | Further info |
 | --- | --- | --- |
-| `<PASSWORD_HASH>` | replace <PASSWORD_HASH> with the hash of sudo user's password | First create on your laptop, a strong password. Then SSH into your server and update ubuntu's user password (sudo passwd ubuntu). And finally, create a password hash using mkpasswd --method=sha-512 command (if mkpasswd is not installed, install it with apt-get install whois)  |
+| `<PASSWORD_HASH>` | replace <PASSWORD_HASH> with the hash of sudo user's password | First create on your laptop, a strong password. Then SSH into your server and update ubuntu user's password ("sudo passwd ubuntu"). And finally, on your laptop, create a password hash using "mkpasswd --method=sha-512" command (if mkpasswd is not installed, install it with "apt-get install whois")  |
 | `SSH_KEY_NAME` | replace it with your SSH key name | For example: ~/.ssh/key_name.pem |
 
 then save and close the file
@@ -95,7 +95,7 @@ j) Replace <TEMPORARY_ITEMS> with your own data:
 | Item | Instructions | Further info |
 | --- | --- | --- |
 | `<CUSTOM_SSH_PORT>` | replace <CUSTOM_SSH_PORT> with the custom SSH port number you wish to setup |  |
-| `TIMEZONE` | replace it with your current timezone | For example: Europe/Rome |
+| `TIMEZONE` | replace it with your current timezone | For example: "Europe/Rome" |
 
 then save and close the file
 
