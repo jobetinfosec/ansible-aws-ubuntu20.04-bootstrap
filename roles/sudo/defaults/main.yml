@@ -1,0 +1,4 @@
+---
+username: ubuntu
+password: "<PASSWORD_HASH>"
+ssh_public_key: "{{ lookup('file', '~/.ssh/<SSH_KEY_NAME>.pem') }}"

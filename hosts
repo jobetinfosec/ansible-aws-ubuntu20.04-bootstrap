@@ -1,0 +1,8 @@
+[ubuntu_servers]
+<SERVER_IP>
+
+[ubuntu_servers:vars]
+ansible_port=22
+ansible_user=ubuntu
+ansible_private_key_file=~/.ssh/<SSH_KEY_NAME>.pem
+

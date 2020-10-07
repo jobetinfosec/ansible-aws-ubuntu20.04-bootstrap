@@ -1,0 +1,108 @@
+---
+# Set timezone
+
+- name: Set timezone
+  timezone:
+    name: "{{ timezone }}"
+
+# Install some utilities
+
+- name: Install utilities
+  apt:
+    name: '{{ item }}'
+    state: present
+  loop:
+  - glances
+  - net-tools
+
+# SSH hardening
+
+- name: Change SSH port
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp='^#Port\s'
+    line="Port {{ custom_ssh_port }}"
+    state=present
+  notify: restart sshd
+
+- name: Disable listening on IPv6 address
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp='^#AddressFamily'
+    line="AddressFamily inet"
+    state=present
+  notify: restart sshd
+
+- name: Enable login grace time
+  lineinfile: 
+    dest: /etc/ssh/sshd_config
+    regexp: '^#LoginGraceTime' 
+    line: 'LoginGraceTime 20s'
+  notify: restart sshd
+
+- name: Disable remote root login
+  lineinfile: 
+    dest: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin' 
+    line: 'PermitRootLogin no'
+  notify: restart sshd
+
+- name: Enable MaxAuthTries
+  lineinfile: 
+    dest: /etc/ssh/sshd_config
+    regexp: '^#MaxAuthTries' 
+    line: 'MaxAuthTries 2'
+  notify: restart sshd
+
+- name: Disable empty password login
+  lineinfile: 
+    dest: /etc/ssh/sshd_config 
+    regexp: '^#?PermitEmptyPasswords' 
+    line: 'PermitEmptyPasswords no'
+  notify: restart sshd
+
+- name: Disable password login
+  lineinfile: 
+    dest: /etc/ssh/sshd_config 
+    regexp: '^#?PasswordAuthentication '
+    line: 'PasswordAuthentication no'
+  notify: restart sshd
+
+- name: Enable PrintMotd
+  lineinfile: 
+    dest: /etc/ssh/sshd_config 
+    regexp: '^PrintMotd'
+    line: 'PrintMotd yes'
+  notify: restart sshd
+
+- name: Enable PrintLastLog
+  lineinfile: 
+    dest: /etc/ssh/sshd_config 
+    regexp: '^#PrintLastLog'
+    line: 'PrintLastLog yes'
+  notify: restart sshd
+
+- name: Set ClientAliveInterval
+  lineinfile: 
+    dest: /etc/ssh/sshd_config 
+    regexp: '^#ClientAliveInterval'
+    line: 'ClientAliveInterval 300'
+  notify: restart sshd
+
+- name: Set ClientAliveCountMax
+  lineinfile: 
+    dest: /etc/ssh/sshd_config 
+    regexp: '^#ClientAliveCountMax'
+    line: 'ClientAliveCountMax 0'
+  notify: restart sshd
+
+# bashrc aliases
+
+- name: Add aliases to sudo user's bashrc file
+  blockinfile:
+    path: /home/{{ username }}/.bashrc
+    marker: "### {mark} SYSTEM ALIASES ###"
+    block: |
+      alias update='sudo apt update && sudo apt dist-upgrade -y && sudo apt autoremove -y'
+      alias la='sudo ls -lah'
+ 
