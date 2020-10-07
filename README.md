@@ -112,14 +112,14 @@ You should receive a SUCCESS message
 l) Check if any error shows up
 
 ```
-ansible-playbook bootstrap.yml --check
+ansible-playbook setup.yml --check
 ```
 
 
 m) Launch installation
 
 ```
-ansible-playbook bootstrap.yml
+ansible-playbook setup.yml
 ```
 
 
